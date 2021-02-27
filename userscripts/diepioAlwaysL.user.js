@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Always L
+// @namespace    https://greasyfork.org/users/117222
 // @version      1.3
 // @description  Holds L for you
 // @author       JaPNaA
 // @match        *://diep.io/*
 // @grant        none
-// @namespace https://greasyfork.org/users/117222
 // ==/UserScript==
 
 (function() {

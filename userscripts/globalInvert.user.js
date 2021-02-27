@@ -5,8 +5,8 @@
 // @description  Inverts colors
 // @author       JaPNaA
 // @match        *://*/*
-// @grant        none
 // @run-at       document-body
+// @grant        none
 // ==/UserScript==
 
 (function () {

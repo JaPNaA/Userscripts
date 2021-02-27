@@ -4,8 +4,8 @@
 // @description  Makes websites messy
 // @author       JaPNaA
 // @match        *://*/*
-// @grant        none
 // @run-at       context-menu
+// @grant        none
 // ==/UserScript==
 
 (function () {

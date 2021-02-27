@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         Gifv fit to screen
+// @namespace    https://greasyfork.org/users/117222
 // @version      1.1
 // @description  Increases/decreases size of gifv to maximize
 // @author       someRandomGuy
 // @match        *://*/*.gifv?*
 // @match        *://*/*.gifv
 // @grant        none
-// @namespace https://greasyfork.org/users/117222
 // ==/UserScript==
 
 (function () {

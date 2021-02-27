@@ -3,7 +3,6 @@
 // @version      0.1
 // @description  Hotkeys for reddit
 // @author       You
-//// @match        https://*.reddit.com/*
 // @match        *://*/*
 // @run-at       document-start
 // @grant        none

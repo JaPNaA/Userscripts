@@ -4,8 +4,8 @@
 // @description  Improves on Crunchyroll's ratings historgram on anime titles
 // @author       someRandomGuy
 // @match        https://www.crunchyroll.com/*
-// @grant        none
 // @run-at       document-end
+// @grant        none
 // ==/UserScript==
 
 (function () {

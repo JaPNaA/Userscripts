@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Better image viewer
+// @namespace    https://greasyfork.org/users/117222
 // @version      0.4
 // @description  A better image viewer
 // @author       someRandomGuy
 // @include      *://*/*
 // @grant        none
-// @namespace    https://greasyfork.org/users/117222
 // @compatible   chrome
 // @compatible   firefox
 // ==/UserScript==

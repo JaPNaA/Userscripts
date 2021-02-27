@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         Pretty File Viewer
+// @namespace    https://greasyfork.org/users/117222
 // @version      1.1.3
+// @description  (Chrome) Changes the ugly file viewer layout to a much prettier one
 // @author       someRandomGuy
 // @match        file:///*
 // @grant        GM_setValue
 // @grant        GM_getValue
-// @description  (Chrome) Changes the ugly file viewer layout to a much prettier one
-// @namespace https://greasyfork.org/users/117222
 // ==/UserScript==
 // query selector
 !function () { function e(e, l) { if ("object" == typeof e) return e; var t; if ("<" == e.substring(0, 1)) { var n = document.createElement("div"); n.innerHTML = e, t = n.children } else t = this == window ? document.querySelectorAll(e) : this.querySelectorAll(e); if (l) { if (1 == l || "first" == l || "element" == l) t = t[0]; else if ("last" == l) t = t[t.length - 1]; else if ("all" == l || 2 == l || "array" == l) "#" == e.substring(0, 1); else if (1 == t.length) t = t[0]; else if (0 == t.length) t = null; else if (!(t.length < 1)) return t } else if (1 == t.length) t = t[0]; else if (0 == t.length) t = null; else if (!(t.length < 1)) return t; return t && t.length && (t = [].slice.call(t)), t } Element.prototype.$ = e, Window.prototype.isWindow = !0, window.$ = e }();
