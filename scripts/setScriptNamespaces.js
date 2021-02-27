@@ -3,7 +3,7 @@ const userscriptMetadata = require("./_userscriptMetadata");
 
 const fs = require("fs");
 
-forAllUserscriptFiles(processFile)
+forAllUserscriptFiles(processFile);
 
 /**
  * @param {string} contents 
@@ -12,6 +12,7 @@ forAllUserscriptFiles(processFile)
  */
 function processFile(contents, fileName, filePath) {
     const map = userscriptMetadata.parseFrom(contents);
+    map.set("namespace", "https://japnaa.github.io/Userscripts/");
     fs.writeFile(
         filePath,
         userscriptMetadata.replaceMetadata(contents, map),
