@@ -1,6 +1,10 @@
 const directory = document.getElementById("directory");
 
-async function main() {
+function main() {
+    loadUserscripts();
+}
+
+async function loadUserscripts() {
     const scripts = await fetch("userscriptsIndex.json").then(e => e.json());
 
     directory.innerHTML = "";
@@ -33,7 +37,5 @@ function createScriptElm(script) {
 
     return scriptElm;
 }
-
-
 
 main();
