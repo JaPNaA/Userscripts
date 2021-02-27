@@ -12,7 +12,7 @@ const userscriptsAndMetaList = [];
 
 for (const file of files) {
     processingPromises.push(processFile(file));
-    if (!file.endsWith(".userscript.js")) {
+    if (!file.endsWith(".user.js")) {
         console.log("Potentially unwanted file in userscripts directory:", file);
     }
 }
