@@ -1,0 +1,10 @@
+{
+  "name": "userscripts",
+  "version": "1.0.0",
+  "description": "JaPNaA's userscripts listing",
+  "scripts": {
+    "build": "node scripts/generateScriptsIndex.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
