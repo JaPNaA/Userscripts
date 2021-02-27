@@ -5,7 +5,7 @@ const path = require("path");
 
 const files = fs.readdirSync(PATH_USERSCRIPTS);
 
-/** @typedef {(contents: string, fileName: string) => any} ProcessFileFunction */
+/** @typedef {(contents: string, fileName: string, filePath: string) => any} ProcessFileFunction */
 
 /** @param {ProcessFileFunction} processFile */
 function forAllUserscriptFiles(processFile) {
@@ -26,8 +26,9 @@ function forAllUserscriptFiles(processFile) {
  * @param {ProcessFileFunction} processFile 
  */
 async function processFileWrapper(fileName, processFile) {
-    const contents = (await fs.promises.readFile(path.join(PATH_USERSCRIPTS, fileName))).toString();
-    processFile(contents, fileName);
+    const filePath = path.join(PATH_USERSCRIPTS, fileName);
+    const contents = (await fs.promises.readFile(filePath)).toString();
+    processFile(contents, fileName, filePath);
 }
 
 module.exports = forAllUserscriptFiles;

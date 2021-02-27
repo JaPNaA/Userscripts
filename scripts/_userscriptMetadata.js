@@ -2,12 +2,8 @@ const startUserscriptMetadataRegex = /\/\/\s*==UserScript==\s*\n/i;
 const endUserscriptMetadataRegex = /\/\/\s*==\/UserScript==\s*\n/i;
 
 /** @param {string} contents */
-function parse(contents) {
-    const startTokenMatch = contents.match(startUserscriptMetadataRegex);
-
-    const metadataStartIndex = startTokenMatch.index + startTokenMatch[0].length;
-    const metadataEndIndex = contents.match(endUserscriptMetadataRegex).index;
-
+function parseFrom(contents) {
+    const { metadataStartIndex, metadataEndIndex } = locateMetadata(contents);
     const lines = contents.slice(metadataStartIndex, metadataEndIndex).split("\n");
     const metadata = new Map();
 
@@ -26,6 +22,26 @@ function parse(contents) {
     }
 
     return metadata;
+}
+
+/**
+ * @param {string} contents 
+ * @param {Map<string, string>} metadata 
+ */
+function replaceMetadata(contents, metadata) {
+    const { metadataStartIndex, metadataEndIndex } = locateMetadata(contents);
+    const beforeStr = contents.slice(0, metadataStartIndex);
+    const afterStr = contents.slice(metadataEndIndex);
+    return beforeStr + generateMetadataStr(metadata) + "\n" + afterStr;
+}
+
+function locateMetadata(contents) {
+    const startTokenMatch = contents.match(startUserscriptMetadataRegex);
+
+    const metadataStartIndex = startTokenMatch.index + startTokenMatch[0].length;
+    const metadataEndIndex = contents.match(endUserscriptMetadataRegex).index;
+
+    return { metadataStartIndex, metadataEndIndex };
 }
 
 const metadataLinePattern = /^\s*\/\/\s*@([^\s]+)\s*(.+)$/;
@@ -63,7 +79,7 @@ const keyColumnMarginLeft = 1;
 /** @param {Map<string, string>} map */
 function generateMetadataStr(map) {
     const keyColumnWidth = getKeyColumnWidth(map) + keyColumnMarginLeft;
-    const lines = ["// ==UserScript=="];
+    const lines = [];
 
     // write in preferred order
     for (const key of metadataPreferredOrder) {
@@ -78,7 +94,6 @@ function generateMetadataStr(map) {
         lines.push(generateMetadataLine(key, keyColumnWidth, value));
     }
 
-    lines.push("// ==/UserScript==");
     return lines.join("\n");
 }
 
@@ -112,5 +127,4 @@ function generateMetadataLine(key, keyColumnWidth, value) {
     }
 }
 
-module.exports = { parse: parse, generateMetadataStr };
-
+module.exports = { parseFrom, replaceMetadata };

@@ -15,7 +15,7 @@ forAllUserscriptFiles(processFile).then(() => writeOutIndex());
  * @param {string} file
  */
 async function processFile(contents, file) {
-    const metadata = userscriptMetadata.parse(contents);
+    const metadata = userscriptMetadata.parseFrom(contents);
     const metadataToKeep = {};
 
     if (!metadata.has("name")) {
