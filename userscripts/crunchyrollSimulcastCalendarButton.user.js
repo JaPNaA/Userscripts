@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         Crunchyroll Simulcast Calendar Button
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Adds a button to access /simulcastcalendar
 // @author       someUsername24

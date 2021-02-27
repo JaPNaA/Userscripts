@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Invert
-// @namespace    http://tampermonkey.net/
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Inverts colors
 // @author       JaPNaA

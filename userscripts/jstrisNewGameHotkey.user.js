@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         JSTris new game hotkey
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Adds Enter to create new game
 // @author       You

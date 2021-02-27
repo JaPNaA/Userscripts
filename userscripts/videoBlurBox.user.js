@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         Video Blur box
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Ability to add a box to blur things
 // @author       JaPNaA

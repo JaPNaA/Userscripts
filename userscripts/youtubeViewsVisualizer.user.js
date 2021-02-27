@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         YouTube Views Visualizer
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      1
 // @description  Highlights videos with more views
 // @author       JaPNaA

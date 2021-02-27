@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         Crunchyroll Theater Mode
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Makes the crunchyroll viewer wide, if not already
 // @author       JaPNaA

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Always L
-// @namespace    https://greasyfork.org/users/117222
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      1.3
 // @description  Holds L for you
 // @author       JaPNaA

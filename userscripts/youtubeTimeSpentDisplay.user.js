@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         YouTube Time Spent Display
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Displays the amount of time you've been on youtube for
 // @author       JaPNaA

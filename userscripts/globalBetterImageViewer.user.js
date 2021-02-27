@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Better image viewer
-// @namespace    https://greasyfork.org/users/117222
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.4
 // @description  A better image viewer
 // @author       someRandomGuy

@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         Github 4 space tabs
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Sets the tab width to 4
 // @author       JaPNaA

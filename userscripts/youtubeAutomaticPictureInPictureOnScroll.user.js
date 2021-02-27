@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         YouTube Automatic Picture In Picture on scroll
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Uses picture in picture when scrolled
 // @author       You

@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         Make Messy
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Makes websites messy
 // @author       JaPNaA

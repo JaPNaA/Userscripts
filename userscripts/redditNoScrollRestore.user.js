@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Reddit No Scroll Restore
-// @namespace    http://tampermonkey.net/
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  try to take over the world!
 // @author       You

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         contentEditable
-// @namespace    https://greasyfork.org/users/117222
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      1.1
 // @description  Applies contentEditable when F7 is pressed
 // @match        *://*/*

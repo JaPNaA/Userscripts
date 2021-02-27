@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Duolingo play hotkey
-// @namespace    http://tampermonkey.net/
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  alt-r to replay audio
 // @author       You

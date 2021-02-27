@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         YouTube speed keyboard controls
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Adds keyboard controls for playback rate
 // @author       JaPNaA

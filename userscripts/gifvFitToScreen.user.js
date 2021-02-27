@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Gifv fit to screen
-// @namespace    https://greasyfork.org/users/117222
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      1.1
 // @description  Increases/decreases size of gifv to maximize
 // @author       someRandomGuy

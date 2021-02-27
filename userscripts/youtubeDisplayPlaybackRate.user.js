@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         YouTube Display Playback Rate
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Displays the playback rate on YouTube videos
 // @author       JaPNaA

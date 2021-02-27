@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         YouTube Highlight Old Videos
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      1
 // @description  Highlights videos that are 8+ years old
 // @author       JaPNaA

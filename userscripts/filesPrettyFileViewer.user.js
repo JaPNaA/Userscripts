@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Pretty File Viewer
-// @namespace    https://greasyfork.org/users/117222
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      1.1.3
 // @description  (Chrome) Changes the ugly file viewer layout to a much prettier one
 // @author       someRandomGuy

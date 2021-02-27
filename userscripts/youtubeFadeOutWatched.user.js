@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         YouTube Fade Out Watched
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Fades out watched videos on YouTube
 // @author       JaPNaA

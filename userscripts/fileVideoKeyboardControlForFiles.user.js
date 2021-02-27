@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         Video Keyboard controls for files
+// @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Adds keyboard controls for video files
 // @author       JaPNaA
