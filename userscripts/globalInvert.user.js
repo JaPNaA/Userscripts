@@ -28,10 +28,6 @@ html.invert-tmscript {
     background: #fff !important; /** becomes black when inverted */
 }
 
-body {
-    background: #fff !important;
-}
-
 html.invert-tmscript img, html.invert-tmscript video {
     filter: invert(100%) hue-rotate(-170deg);
 }
