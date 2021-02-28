@@ -13,6 +13,7 @@ forAllUserscriptFiles(processFile);
 function processFile(contents, fileName, filePath) {
     const map = userscriptMetadata.parseFrom(contents);
     map.set("namespace", "https://japnaa.github.io/Userscripts/");
+    map.set("author", "JaPNaA");
     fs.writeFile(
         filePath,
         userscriptMetadata.replaceMetadata(contents, map),

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "JaPNaA's userscripts listing",
   "scripts": {
-    "build": "node scripts/generateScriptsIndex.js"
+    "build": "node scripts/setScriptNamespacesAndAuthor.js && node scripts/generateScriptsIndex.js"
   },
   "author": "",
   "license": "ISC"
