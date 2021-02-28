@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Invert
 // @namespace    https://japnaa.github.io/Userscripts/
-// @version      0.1
+// @version      0.2
 // @description  Inverts colors
 // @author       JaPNaA
 // @match        *://*/*
@@ -24,12 +24,16 @@
     styleElm.innerHTML = `
 
 html.invert-tmscript {
-filter: invert(100%) hue-rotate(170deg) brightness(70%);
-background: #000 !important;
+    filter: invert(100%) hue-rotate(170deg) brightness(70%);
+    background: #fff !important; /** becomes black when inverted */
+}
+
+body {
+    background: #fff !important;
 }
 
 html.invert-tmscript img, html.invert-tmscript video {
-filter: invert(100%) hue-rotate(-170deg);
+    filter: invert(100%) hue-rotate(-170deg);
 }
 
 `;
