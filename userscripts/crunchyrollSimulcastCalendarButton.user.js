@@ -3,7 +3,7 @@
 // @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Adds a button to access /simulcastcalendar
-// @author       someUsername24
+// @author       JaPNaA
 // @match        *://www.crunchyroll.com/*
 // @grant        none
 // ==/UserScript==

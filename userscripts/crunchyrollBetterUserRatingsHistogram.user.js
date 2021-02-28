@@ -3,7 +3,7 @@
 // @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Improves on Crunchyroll's ratings historgram on anime titles
-// @author       someRandomGuy
+// @author       JaPNaA
 // @match        https://www.crunchyroll.com/*
 // @run-at       document-end
 // @grant        none

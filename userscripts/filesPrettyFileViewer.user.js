@@ -3,7 +3,7 @@
 // @namespace    https://japnaa.github.io/Userscripts/
 // @version      1.1.3
 // @description  (Chrome) Changes the ugly file viewer layout to a much prettier one
-// @author       someRandomGuy
+// @author       JaPNaA
 // @match        file:///*
 // @grant        GM_setValue
 // @grant        GM_getValue

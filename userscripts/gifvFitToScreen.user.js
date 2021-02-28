@@ -3,7 +3,7 @@
 // @namespace    https://japnaa.github.io/Userscripts/
 // @version      1.1
 // @description  Increases/decreases size of gifv to maximize
-// @author       someRandomGuy
+// @author       JaPNaA
 // @match        *://*/*.gifv?*
 // @match        *://*/*.gifv
 // @grant        none

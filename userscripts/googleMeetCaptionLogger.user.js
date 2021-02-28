@@ -3,7 +3,7 @@
 // @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Logs captions from Google Meet
-// @author       Student who wants to go to the washroom but isn't sure if the teacher will say anything important while their gone
+// @author       JaPNaA
 // @match        https://meet.google.com/*
 // @grant        none
 // ==/UserScript==

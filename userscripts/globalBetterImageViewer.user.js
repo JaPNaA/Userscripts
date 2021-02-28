@@ -3,7 +3,7 @@
 // @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.4
 // @description  A better image viewer
-// @author       someRandomGuy
+// @author       JaPNaA
 // @include      *://*/*
 // @grant        none
 // @compatible   chrome

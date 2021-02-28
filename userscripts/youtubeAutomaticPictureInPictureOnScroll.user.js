@@ -3,7 +3,7 @@
 // @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Uses picture in picture when scrolled
-// @author       You
+// @author       JaPNaA
 // @match        https://www.youtube.com/*
 // @grant        none
 // ==/UserScript==

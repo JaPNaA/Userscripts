@@ -3,7 +3,7 @@
 // @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  Hotkeys for reddit
-// @author       You
+// @author       JaPNaA
 // @match        *://*/*
 // @run-at       document-start
 // @grant        none

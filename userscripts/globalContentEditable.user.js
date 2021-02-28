@@ -3,6 +3,7 @@
 // @namespace    https://japnaa.github.io/Userscripts/
 // @version      1.1
 // @description  Applies contentEditable when F7 is pressed
+// @author       JaPNaA
 // @match        *://*/*
 // @grant        none
 // ==/UserScript==

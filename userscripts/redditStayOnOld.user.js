@@ -3,7 +3,7 @@
 // @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  try to take over the world!
-// @author       You
+// @author       JaPNaA
 // @match        https://old.reddit.com/*
 // @grant        none
 // ==/UserScript==

@@ -3,7 +3,7 @@
 // @namespace    https://japnaa.github.io/Userscripts/
 // @version      0.1
 // @description  alt-r to replay audio
-// @author       You
+// @author       JaPNaA
 // @match        *://www.duolingo.com/*
 // @grant        none
 // ==/UserScript==
