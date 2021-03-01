@@ -1,5 +1,5 @@
 import forAllUserscriptFiles from "./_forAllUserscriptFiles.js";
-import userscriptMetadata from "./_userscriptMetadata.js";
+import userscriptMetadata from "../commmon/userscriptMetadata.js";
 
 import { writeFile } from "fs";
 

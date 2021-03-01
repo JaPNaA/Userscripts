@@ -4,7 +4,7 @@ const METADATA_KEYS_TO_KEEP = ["name", "description"];
 import { writeFileSync } from "fs";
 
 import forAllUserscriptFiles from "./_forAllUserscriptFiles.js";
-import userscriptMetadata from "./_userscriptMetadata.js";
+import userscriptMetadata from "../commmon/userscriptMetadata.js";
 
 const userscriptsAndMetaList = [];
 
