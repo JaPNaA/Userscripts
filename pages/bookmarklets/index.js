@@ -211,10 +211,20 @@ class UserscriptTextarea {
                 importDialogue.getElm()
             );
 
-            importDialogue.waitForImport().then(e => {
-                this.textarea.value = e;
-                this._inputHandler();
-            });
+            importDialogue.waitForImport()
+                .then(e => {
+                    this._removeHintDialogue();
+                    if (!e) {
+                        alert("Failed to import - request failed or returned empty");
+                        return;
+                    }
+                    this.textarea.value = e;
+                    this._inputHandler();
+                })
+                .catch(e => {
+                    this._removeHintDialogue();
+                    alert("Failed to import - request failed\n" + e);
+                });
         });
 
         this.container.appendChild(this.importButtonContainer);
@@ -238,12 +248,16 @@ class UserscriptTextarea {
 
         if (this.textarea.value !== "") {
             this.importButton.classList.add("hide");
-            if (this.existingHintDialogue) {
-                this.existingHintDialogue.remove();
-                this.existingHintDialogue = undefined;
-            }
+            this._removeHintDialogue();
         } else {
             this.importButton.classList.remove("hide");
+        }
+    }
+
+    _removeHintDialogue() {
+        if (this.existingHintDialogue) {
+            this.existingHintDialogue.remove();
+            this.existingHintDialogue = undefined;
         }
     }
 }
@@ -273,6 +287,7 @@ class UserscriptTextareaImportDialogue {
         return new Promise(res => {
             this.fromURLOption.addEventListener("click", () => {
                 const url = prompt("Enter URL");
+                if (!url) { return; }
                 res(fetch(url).then(e => e.text()));
             });
 
