@@ -1,3 +1,5 @@
+import userscriptMetadata from "../../commmon/userscriptMetadata.js";
+
 /** @type {HTMLTextAreaElement} */ // @ts-ignore
 const userscriptsInputDiv = document.getElementById("userscriptsInput");
 /** @type {HTMLButtonElement} */ // @ts-ignore
@@ -7,6 +9,9 @@ const nameInput = document.getElementById("name");
 /** @type {HTMLAnchorElement} */ // @ts-ignore
 const outputAnchor = document.getElementById("output");
 
+let inputtedName = undefined;
+let placeholderName = undefined;
+
 function main() {
     new UserscriptTextarea().appendToUserscriptInputDiv();
 
@@ -15,7 +20,8 @@ function main() {
     });
 
     nameInput.addEventListener("input", function () {
-        outputAnchor.innerText = nameInput.value;
+        inputtedName = nameInput.value;
+        updateName();
     });
 
     /** @type {HintDialogue} */
@@ -37,10 +43,36 @@ function main() {
     });
 }
 
-/** @param {string[]} code */
-function processInput(code) {
+function updateName() {
+    let name;
+    if (inputtedName && inputtedName.trim()) {
+        name = inputtedName;
+    } else {
+        name = placeholderName.trim() || "My bookmarklet";
+    }
+
+    nameInput.placeholder = name;
+    outputAnchor.innerText = name;
+}
+
+/** @param {string[]} userscripts */
+function processInput(userscripts) {
+    const names = [];
+
+    for (const userscript of userscripts) {
+        const userscriptName = userscriptMetadata.parseFrom(userscript).get("name");
+        if (userscriptName) {
+            names.push(userscriptName)
+        }
+    }
+
+    if (names.length > 0 && !inputtedName) {
+        placeholderName = names.join(" + ");
+        updateName();
+    }
+
     return `javascript:(function() {
-    const userscripts = ${JSON.stringify(code)};
+    const userscripts = ${JSON.stringify(userscripts)};
     for (const userscript of userscripts) {
         try {
             eval(userscript);
@@ -101,6 +133,7 @@ class UserscriptTextarea {
 
     _inputHandler() {
         outputAnchor.href = processInput(UserscriptTextarea.getAllInputs());
+
         if (this.textarea.value !== "") {
             this.importButton.classList.add("hide");
             if (this.existingHintDialogue) {
