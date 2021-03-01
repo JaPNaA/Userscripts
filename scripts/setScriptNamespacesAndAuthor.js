@@ -1,7 +1,7 @@
-const forAllUserscriptFiles = require("./_forAllUserscriptFiles");
-const userscriptMetadata = require("./_userscriptMetadata");
+import forAllUserscriptFiles from "./_forAllUserscriptFiles.js";
+import userscriptMetadata from "./_userscriptMetadata.js";
 
-const fs = require("fs");
+import { writeFile } from "fs";
 
 forAllUserscriptFiles(processFile);
 
@@ -14,7 +14,7 @@ function processFile(contents, fileName, filePath) {
     const map = userscriptMetadata.parseFrom(contents);
     map.set("namespace", "https://japnaa.github.io/Userscripts/");
     map.set("author", "JaPNaA");
-    fs.writeFile(
+    writeFile(
         filePath,
         userscriptMetadata.replaceMetadata(contents, map),
         () => { }

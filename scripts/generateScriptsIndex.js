@@ -1,10 +1,10 @@
 const PATH_OUTPUT_INDEX_FILE = "userscriptsIndex.json";
 const METADATA_KEYS_TO_KEEP = ["name", "description"];
 
-const fs = require("fs");
+import { writeFileSync } from "fs";
 
-const forAllUserscriptFiles = require("./_forAllUserscriptFiles");
-const userscriptMetadata = require("./_userscriptMetadata");
+import forAllUserscriptFiles from "./_forAllUserscriptFiles.js";
+import userscriptMetadata from "./_userscriptMetadata.js";
 
 const userscriptsAndMetaList = [];
 
@@ -40,6 +40,6 @@ function writeOutIndex() {
     );
 
     const str = JSON.stringify(userscriptsAndMetaList);
-    fs.writeFileSync(PATH_OUTPUT_INDEX_FILE, str);
+    writeFileSync(PATH_OUTPUT_INDEX_FILE, str);
     console.log("Written out index with " + userscriptsAndMetaList.length + " userscripts");
 }

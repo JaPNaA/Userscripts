@@ -1,7 +1,7 @@
 const PATH_USERSCRIPTS = "userscripts/";
 
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
 const files = fs.readdirSync(PATH_USERSCRIPTS);
 
@@ -31,4 +31,4 @@ async function processFileWrapper(fileName, processFile) {
     processFile(contents, fileName, filePath);
 }
 
-module.exports = forAllUserscriptFiles;
+export default forAllUserscriptFiles;

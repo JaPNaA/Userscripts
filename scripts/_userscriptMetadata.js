@@ -127,4 +127,4 @@ function generateMetadataLine(key, keyColumnWidth, value) {
     }
 }
 
-module.exports = { parseFrom, replaceMetadata };
+export default { parseFrom, replaceMetadata };
