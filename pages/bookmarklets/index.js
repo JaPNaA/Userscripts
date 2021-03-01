@@ -57,28 +57,130 @@ function updateName() {
 
 /** @param {string[]} userscripts */
 function processInput(userscripts) {
-    const names = [];
+    const allNames = [];
+    const allIncludes = [];
 
     for (const userscript of userscripts) {
-        const userscriptName = userscriptMetadata.parseFrom(userscript).get("name");
-        if (userscriptName) {
-            names.push(userscriptName)
+        /** @type {Map<string, string>} */
+        let metadata;
+        try {
+            metadata = userscriptMetadata.parseFrom(userscript);
+        } catch (err) {
+            metadata = new Map();
         }
+
+        const userscriptName = metadata.get("name");
+        if (userscriptName) {
+            allNames.push(userscriptName)
+        }
+
+        const matchesAndIncludes = [];
+        const matches = metadata.get("match");
+        const includes = metadata.get("include");
+        const excludes = metadata.get("exclude");
+
+        arrayAdd(matchesAndIncludes, matches);
+        arrayAdd(matchesAndIncludes, includes);
+        allIncludes.push([matchesAndIncludes, arrayAdd([], excludes)]);
     }
 
-    if (names.length > 0 && !inputtedName) {
-        placeholderName = names.join(" + ");
+    if (allNames.length > 0 && !inputtedName) {
+        placeholderName = allNames.join(" + ");
         updateName();
     }
 
     return `javascript:(function() {
     const userscripts = ${JSON.stringify(userscripts)};
-    for (const userscript of userscripts) {
-        try {
-            eval(userscript);
-        } catch (err) { console.error(err); }
+    const includes = ${JSON.stringify(allIncludes)};
+    const ranCheckKey = ${Math.random()} + "-" + ${Date.now()} + "-userscripts-ran";
+    const len = userscripts.length;
+
+    function run() {
+        if (window[ranCheckKey]) {
+            if (!confirm("Are you sure you want to run the userscripts again?")) {
+                return;
+            }
+        }
+
+        window[ranCheckKey] = true;
+
+        for (let i = 0; i < len; i++) {
+            const userscript = userscripts[i];
+            const includeData = includes[i];
+
+            if (!doesMatch(includeData, location.href)) { continue; }
+
+            try {
+                window.eval(userscript);
+            } catch (err) { console.error(err); }
+        }
     }
+
+    function doesMatch(includesData, url) {
+        const [includes, excludes] = includesData;
+
+        for (const exclude of excludes) {
+            if (patternMatchesURL(exclude, url)) {
+                return false;
+            }
+        }
+
+        for (const include of includes) {
+            if (patternMatchesURL(include, url)) {
+                return true;
+            }
+        }
+
+        return includes.length === 0;
+    }
+
+    function patternMatchesURL(pattern, url) {
+        let regex;
+
+        if (pattern.startsWith("/") && pattern.endsWith("/")) {
+            regex = new RegExp(pattern.slice(1, -1));
+        } else {
+            regex = patternStrToRegex(pattern);
+        }
+
+        return regex.test(url);
+    }
+
+    const specialCharacters = [
+        "\\\\", ".", "+", "?", "^", "$", "(", ")", "[", "]", "{", "}", "|"
+    ];
+    const specialCharactersRegex = specialCharacters.map(c => new RegExp("\\\\" + c, "g"));
+
+    function patternStrToRegex(pattern) {
+        let regexStr = pattern;
+        for (let i = 0; i < specialCharacters.length; i++) {
+            specialChar = specialCharacters[i];
+            specialCharRegexp = specialCharactersRegex[i];
+            regexStr = regexStr.replace(specialCharRegexp, "\\\\" + specialChar);
+        }
+        return new RegExp("^" + regexStr.replace(/\\*/g, ".*") + "$", "i");
+    }
+
+    run();
 }());`;
+}
+
+/**
+ * @template T
+ * @param {T[]} arr 
+ * @param {T | T[] | undefined} elm 
+ */
+function arrayAdd(arr, elm) {
+    if (!elm) { return arr; }
+    if (Array.isArray(elm)) {
+        for (const i of elm) {
+            arr.push(i);
+        }
+    } else {
+        arr.push(elm);
+    }
+
+    return arr;
 }
 
 
