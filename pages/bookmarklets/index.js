@@ -264,6 +264,9 @@ class UserscriptTextareaImportDialogue {
         this.fromJaPNaAOption.innerText = "JaPNaA...";
         this.elm.appendChild(this.fromJaPNaAOption);
 
+        this.fromPaste = document.createElement("button");
+        this.fromPaste.innerText = "Paste";
+        this.elm.appendChild(this.fromPaste);
     }
 
     waitForImport() {
@@ -278,6 +281,14 @@ class UserscriptTextareaImportDialogue {
                 res(frame.waitForSelection()
                     .then(url => fetch(url))
                     .then(e => e.text()));
+            });
+
+            this.fromPaste.addEventListener("click", () => {
+                const readClipboardPromise = navigator.clipboard.readText();
+                readClipboardPromise.catch(() => {
+                    alert("Failed to read from clipboard. Try using ctrl-v on the textarea instead.");
+                });
+                res(readClipboardPromise);
             });
         })
     }
