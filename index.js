@@ -2,6 +2,12 @@ const directory = document.getElementById("directory");
 
 function main() {
     loadUserscripts();
+
+    addEventListener("message", function (e) {
+        if (e.data === "userscriptSelect") {
+            userscriptSelectMode();
+        }
+    });
 }
 
 async function loadUserscripts() {
@@ -37,5 +43,23 @@ function createScriptElm(script) {
 
     return scriptElm;
 }
+
+function userscriptSelectMode() {
+    document.getElementById("article").classList.add("hidden");
+
+    addEventListener("click", function (event) {
+        let here = event.target;
+        while (here instanceof HTMLElement) {
+            if (here instanceof HTMLAnchorElement) {
+                event.preventDefault();
+                parent.postMessage(here.href, "*");
+                return;
+            }
+
+            here = here.parentElement;
+        }
+    });
+}
+
 
 main();

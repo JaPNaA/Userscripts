@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Userscript Bookmarklets </title>
+
+    <link rel="stylesheet" href="../../index.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <main>
+        <h1> Bookmarklets </h1>
+        <p> It's possible to run userscripts without having to any install extentions. </p>
+        <p> We can use the "javascript:" "protocol" as a URL to run javascript on other websites. </p>
+        <p> This website allows you to generate these bookmarklets. </p>
+
+        <div id="userscriptsInput">
+            <noscript> You need JavaScript to do this! (Why are you interested in Userscript when JavaScript isn't even enabled?) </noscript>
+        </div>
+        <button id="add"> Add one more script </button>
+
+        <p>
+            <label>
+                Name your bookmarklet:
+                <input id="name" placeholder="My bookmarklet">
+            </label>
+        </p>
+        <p> Drag the link below to your bookmarks bar </p>
+        <a id="output"> My bookmarklet </a>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

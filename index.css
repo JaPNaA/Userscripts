@@ -4,6 +4,7 @@ main {
     max-width: 720px;
     margin: auto;
     margin-top: 10vh;
+    margin-bottom: 30vh;
 }
 
 #directory {
@@ -22,4 +23,8 @@ main {
 
 #directory .script {
     padding: 8px;
+}
+
+#article.hidden {
+    display: none;
 }
