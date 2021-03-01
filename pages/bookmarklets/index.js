@@ -10,7 +10,7 @@ const nameInput = document.getElementById("name");
 const outputAnchor = document.getElementById("output");
 
 let inputtedName = undefined;
-let placeholderName = undefined;
+let placeholderName = "";
 
 function main() {
     new UserscriptTextarea().appendToUserscriptInputDiv();
@@ -71,7 +71,7 @@ function processInput(userscripts) {
 
         const userscriptName = metadata.get("name");
         if (userscriptName) {
-            allNames.push(userscriptName)
+            allNames.push(userscriptName);
         }
 
         const matchesAndIncludes = [];
@@ -86,7 +86,6 @@ function processInput(userscripts) {
 
     if (allNames.length > 0 && !inputtedName) {
         placeholderName = allNames.join(" + ");
-        updateName();
     }
 
     return `javascript:(function() {
@@ -235,6 +234,7 @@ class UserscriptTextarea {
 
     _inputHandler() {
         outputAnchor.href = processInput(UserscriptTextarea.getAllInputs());
+        updateName();
 
         if (this.textarea.value !== "") {
             this.importButton.classList.add("hide");
