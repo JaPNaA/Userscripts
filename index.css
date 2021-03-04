@@ -16,9 +16,17 @@ main {
     margin-bottom: 0.2em;
 }
 
-#directory a {
+#directory .script > a {
     color: inherit;
     text-decoration: none;
+}
+
+#directory a.docs {
+    display: inline-block;
+    font-size: 0.9em;
+    background-color: rgba(33, 104, 211, 0.808);
+    padding: 4px 8px;
+    color: #ffffff;
 }
 
 #directory .script {
