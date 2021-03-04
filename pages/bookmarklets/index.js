@@ -316,10 +316,10 @@ class UserscriptTextareaImportDialogue {
 class JaPNaAUserscriptsIFrame {
     constructor() {
         this.container = document.createElement("div");
-        this.container.classList.add("JaPNaAUserscriptsIframeContainer");
+        this.container.classList.add("iframeBackground");
 
         this.iframe = document.createElement("iframe");
-        this.iframe.classList.add("JaPNaAUserscriptsIframe");
+        this.iframe.classList.add("iframe");
         this.iframe.src = "../../";
         this.container.appendChild(this.iframe);
 
