@@ -161,6 +161,18 @@
             this.isRotating = false;
 
             /**
+             * Can the program to sleep?
+             * @type {boolean}
+             */
+            this.canSleep = true;
+
+            /**
+             * Is the program sleeping?
+             * @type {boolean}
+             */
+            this.isActive = true;
+
+            /**
              * Is the user holding down the up arrow key?
              * @type {boolean}
              */
@@ -363,12 +375,24 @@
             removeEventListener("blur", this._onBlur);
         }
 
+        _wakeFromSleep() {
+            if (this.isActive) { return; }
+            this.isActive = true;
+            this._reqanfLoop();
+        }
+
         /**
          * RequestAnimationFrame loop
          */
         _reqanfLoop() {
             this._tick();
             this._updateInlineStyles();
+
+            if (this.canSleep) {
+                this.isActive = false;
+                return;
+            }
+
             requestAnimationFrame(this._reqanfLoop);
         }
 
@@ -381,6 +405,10 @@
 
             this._updatePositionByKeyboard();
 
+            const prevX = this.x;
+            const prevY = this.y;
+            const prevScale = this.scale;
+
             if (!this.isDragging) {
                 this.x += this.vx;
                 this.y += this.vy;
@@ -390,12 +418,15 @@
                 this.vy *= 0.95;
             }
 
+            this._restrainToBoundaries();
+
             this.x += (this.tx - this.x) / 5;
             this.y += (this.ty - this.y) / 5;
-
             this.scale += (this.tScale - this.scale) / 5;
 
-            this._restrainToBoundaries();
+            this.canSleep = !this.isDragging &&
+                Math.abs(this.x - prevX) + Math.abs(this.y - prevY) + Math.abs(this.scale - prevScale)
+                < 0.001;
         }
 
         _updatePositionByKeyboard() {
@@ -440,7 +471,6 @@
             } else if (this.tx < this.padding + -twidth) {
                 this.tx = this.padding + -twidth;
             }
-
         }
 
         /**
@@ -524,6 +554,11 @@
 
             this.cursorX = newX;
             this.cursorY = newY;
+
+            if (!this.isActive) {
+                this.lastCursorX = this.cursorX;
+                this.lastCursorY = this.cursorY;
+            }
         }
 
         /**
@@ -650,6 +685,8 @@
             this.x += x;
             this.ty += y;
             this.y += y;
+
+            this._wakeFromSleep();
         }
 
         /**
@@ -659,6 +696,8 @@
         _rotate(angle) {
             this.rotation += angle;
             this.rotation %= Math.PI * 2;
+
+            this._wakeFromSleep();
         }
 
         /**
@@ -671,6 +710,8 @@
             this.tScale *= factor;
             this.tx -= (x - this.tx) * (factor - 1);
             this.ty -= (y - this.ty) * (factor - 1);
+
+            this._wakeFromSleep();
         }
 
         /**
@@ -691,6 +732,8 @@
             this.vx = 0;
             this.vy = 0;
             this.rotation = 0;
+
+            this._wakeFromSleep();
         }
 
         // --- Animation Control ---
