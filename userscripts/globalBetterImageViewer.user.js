@@ -146,7 +146,7 @@
              * The boundary padding
              * @type {number}
              */
-            this.padding = Math.min(this.boundWidth + this.boundHeight) * 0.1;
+            this.padding = Math.min(this.boundWidth, this.boundHeight) * 0.4;
 
             /**
              * Is the user dragging the image?
