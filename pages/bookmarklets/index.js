@@ -55,16 +55,7 @@ function main() {
  */
 function userscriptTextreaImportFromURL(userscriptTextrea, src) {
     userscriptTextrea.textarea.value = "Auto importing from `" + src + "`...";
-    fetchText(src)
-        .then(text => {
-            if (text) {
-                userscriptTextrea.textarea.value = text || "Failed to auto import:\nEmpty response";
-                userscriptTextrea._inputHandler();
-            } else {
-                userscriptTextrea.textarea.value = "Failed to auto import:\nEmpty response";
-            }
-        })
-        .catch(err => userscriptTextrea.textarea.value = "Failed to auto import:\n" + err);
+    userscriptTextrea.attachToImportPromise(fetchText(src));
 }
 
 /** @param {string} src */
