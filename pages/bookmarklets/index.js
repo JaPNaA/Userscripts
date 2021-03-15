@@ -45,19 +45,31 @@ function main() {
 
     if (location.hash) {
         const autoloadSrc = location.hash.startsWith("#") ? location.hash.slice(1) : location.hash;
-        firstUserscriptTextarea.textarea.value = "Auto importing from `" + autoloadSrc + "`...";
-        fetch(autoloadSrc)
-            .then(e => e.text())
-            .then(text => {
-                if (text) {
-                    firstUserscriptTextarea.textarea.value = text || "Failed to auto import:\nEmpty response";
-                    firstUserscriptTextarea._inputHandler();
-                } else {
-                    firstUserscriptTextarea.textarea.value = "Failed to auto import:\nEmpty response";
-                }
-            })
-            .catch(err => firstUserscriptTextarea.textarea.value = "Failed to auto import:\n" + err);
+        userscriptTextreaImportFromURL(firstUserscriptTextarea, autoloadSrc);
     }
+}
+
+/**
+ * @param {UserscriptTextarea} userscriptTextrea 
+ * @param {string} src 
+ */
+function userscriptTextreaImportFromURL(userscriptTextrea, src) {
+    userscriptTextrea.textarea.value = "Auto importing from `" + src + "`...";
+    fetchText(src)
+        .then(text => {
+            if (text) {
+                userscriptTextrea.textarea.value = text || "Failed to auto import:\nEmpty response";
+                userscriptTextrea._inputHandler();
+            } else {
+                userscriptTextrea.textarea.value = "Failed to auto import:\nEmpty response";
+            }
+        })
+        .catch(err => userscriptTextrea.textarea.value = "Failed to auto import:\n" + err);
+}
+
+/** @param {string} src */
+function fetchText(src) {
+    return fetch(src).then(e => e.text());
 }
 
 function updateName() {
@@ -228,20 +240,7 @@ class UserscriptTextarea {
                 importDialogue.getElm()
             );
 
-            importDialogue.waitForImport()
-                .then(e => {
-                    this._removeHintDialogue();
-                    if (!e) {
-                        alert("Failed to import - request failed or returned empty");
-                        return;
-                    }
-                    this.textarea.value = e;
-                    this._inputHandler();
-                })
-                .catch(e => {
-                    this._removeHintDialogue();
-                    alert("Failed to import - request failed\n" + e);
-                });
+            this.attachToImportPromise(importDialogue.waitForImport());
         });
 
         this.container.appendChild(this.importButtonContainer);
@@ -253,6 +252,22 @@ class UserscriptTextarea {
         return UserscriptTextarea.all.map(
             userscriptTextarea => userscriptTextarea.textarea.value
         );
+    }
+
+    /** @param {Promise<string>} promise */
+    attachToImportPromise(promise) {
+        promise.then(e => {
+            this._removeHintDialogue();
+            if (!e) {
+                alert("Failed to import - request failed or returned empty");
+                return;
+            }
+            this.textarea.value = e;
+            this._inputHandler();
+        }).catch(e => {
+            this._removeHintDialogue();
+            alert("Failed to import - request failed\n" + e);
+        });
     }
 
     appendToUserscriptInputDiv() {
@@ -305,14 +320,15 @@ class UserscriptTextareaImportDialogue {
             this.fromURLOption.addEventListener("click", () => {
                 const url = prompt("Enter URL");
                 if (!url) { return; }
-                res(fetch(url).then(e => e.text()));
+                res(fetchText(url));
             });
 
             this.fromJaPNaAOption.addEventListener("click", () => {
                 const frame = new JaPNaAUserscriptsIFrame();
-                res(frame.waitForSelection()
-                    .then(url => fetch(url))
-                    .then(e => e.text()));
+                res(
+                    frame.waitForSelection()
+                        .then(url => fetchText(url))
+                );
             });
 
             this.fromPaste.addEventListener("click", () => {
