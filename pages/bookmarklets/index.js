@@ -13,8 +13,6 @@ let inputtedName = undefined;
 let placeholderName = "";
 
 function main() {
-    new UserscriptTextarea().appendToUserscriptInputDiv();
-
     addUserscriptButton.addEventListener("click", function () {
         new UserscriptTextarea().appendToUserscriptInputDiv();
     });
@@ -41,6 +39,25 @@ function main() {
         existingHintDialogue.remove();
         existingHintDialogue = undefined;
     });
+
+    const firstUserscriptTextarea = new UserscriptTextarea();
+    firstUserscriptTextarea.appendToUserscriptInputDiv();
+
+    if (location.hash) {
+        const autoloadSrc = location.hash.startsWith("#") ? location.hash.slice(1) : location.hash;
+        firstUserscriptTextarea.textarea.value = "Auto importing from `" + autoloadSrc + "`...";
+        fetch(autoloadSrc)
+            .then(e => e.text())
+            .then(text => {
+                if (text) {
+                    firstUserscriptTextarea.textarea.value = text || "Failed to auto import:\nEmpty response";
+                    firstUserscriptTextarea._inputHandler();
+                } else {
+                    firstUserscriptTextarea.textarea.value = "Failed to auto import:\nEmpty response";
+                }
+            })
+            .catch(err => firstUserscriptTextarea.textarea.value = "Failed to auto import:\n" + err);
+    }
 }
 
 function updateName() {
