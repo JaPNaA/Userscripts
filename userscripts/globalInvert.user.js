@@ -41,15 +41,19 @@ html.invert-tmscript img, html.invert-tmscript video {
     let automaticallyDisabled = false;
     let wouldAutomaticallyDisable = false;
 
-    updateStateFromLocalStorage();
+    if (window["isRunningAsBookmarkletUserscript"]) {
+        enabled = true;
+    } else {
+        updateStateFromLocalStorage();
+    }
+
+    updateState();
 
     addEventListener("keydown", function (e) {
         if (e.keyCode === 120) { // F9
             toggleState();
         }
     });
-
-    updateState();
 
     addEventListener("load", function (e) {
         updateState();

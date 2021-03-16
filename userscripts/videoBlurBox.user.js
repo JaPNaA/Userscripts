@@ -10,12 +10,16 @@
 // ==/UserScript==
 
 (function () {
-    addEventListener("keydown", function (e) {
-        if (e.keyCode === 66 && e.shiftKey && e.ctrlKey) {
-            createBlurBox();
-            e.preventDefault();
-        }
-    });
+    if (window["isRunningAsBookmarkletUserscript"]) {
+        createBlurBox();
+    } else {
+        addEventListener("keydown", function (e) {
+            if (e.keyCode === 66 && e.shiftKey && e.ctrlKey) {
+                createBlurBox();
+                e.preventDefault();
+            }
+        });
+    }
 
     function createBlurBox() {
         const div = document.createElement("div");
