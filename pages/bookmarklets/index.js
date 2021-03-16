@@ -123,6 +123,8 @@ function processInput(userscripts) {
 
         window[ranCheckKey] = true;
 
+        window.isRunningAsBookmarkletUserscript = true;
+        
         for (let i = 0; i < len; i++) {
             const userscript = userscripts[i];
             const includeData = includes[i];
@@ -133,6 +135,8 @@ function processInput(userscripts) {
                 window.eval(userscript);
             } catch (err) { console.error(err); }
         }
+
+        delete window.isRunningAsBookmarkletUserscript;
     }
 
     function doesMatch(includesData, url) {
