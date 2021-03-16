@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Google Meet Caption Logger
 // @namespace    https://japnaa.github.io/Userscripts/
-// @version      0.1
+// @version      0.1.1
 // @description  Logs captions from Google Meet
 // @author       JaPNaA
 // @match        https://meet.google.com/*
@@ -17,7 +17,7 @@
 
     do {
         await wait(1000);
-        target = document.querySelector("c-wiz > div > div > div > div > div:nth-child(6)");
+        target = document.querySelector("c-wiz > div > div > div > div > div:nth-child(6)[style='bottom: 88px;'");
     } while (!target);
 
     const mutationObserver = new MutationObserver(mutations => {
