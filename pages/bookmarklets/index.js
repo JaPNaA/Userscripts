@@ -8,18 +8,34 @@ const addUserscriptButton = document.getElementById("add");
 const nameInput = document.getElementById("name");
 /** @type {HTMLAnchorElement} */ // @ts-ignore
 const outputAnchor = document.getElementById("output");
+/** @type {HTMLInputElement} */ // @ts-ignore
+const optionMinifyCheckbox = document.getElementById("minify");
+/** @type {HTMLInputElement} */ // @ts-ignore
+const optionSmallWrapperCheckbox = document.getElementById("smallWrapper");
 
 let inputtedName = undefined;
 let placeholderName = "";
+let optionUseSmallWrapper = optionSmallWrapperCheckbox.checked;
+let optionMinify = optionMinifyCheckbox.checked;
 
 function main() {
     addUserscriptButton.addEventListener("click", function () {
         new UserscriptTextarea().appendToUserscriptInputDiv();
     });
 
-    nameInput.addEventListener("input", function () {
+    nameInput.addEventListener("change", function () {
         inputtedName = nameInput.value;
         updateName();
+    });
+
+    optionMinifyCheckbox.addEventListener("change", function () {
+        optionMinify = optionMinifyCheckbox.checked;
+        updateAnchorHref();
+    });
+
+    optionSmallWrapperCheckbox.addEventListener("change", function () {
+        optionUseSmallWrapper = optionSmallWrapperCheckbox.checked;
+        updateAnchorHref();
     });
 
     /** @type {HintDialogue} */
@@ -75,8 +91,22 @@ function updateName() {
     outputAnchor.innerText = name;
 }
 
+async function updateAnchorHref() {
+    outputAnchor.href = await processInput(UserscriptTextarea.getAllInputs());
+}
+
+/** @param {string} code */
+async function minifyJavascript(code) {
+    if (!window.Terser) {
+        eval(await fetchText("https://cdn.jsdelivr.net/npm/source-map@0.7.3/dist/source-map.js"));
+        eval(await fetchText("https://cdn.jsdelivr.net/npm/terser/dist/bundle.min.js"));
+    }
+
+    return (await Terser.minify(code)).code;
+}
+
 /** @param {string[]} userscripts */
-function processInput(userscripts) {
+async function processInput(userscripts) {
     const allNames = [];
     const allIncludes = [];
 
@@ -108,84 +138,40 @@ function processInput(userscripts) {
         placeholderName = allNames.join(" + ");
     }
 
-    return `javascript:(function() {
-    const userscripts = ${JSON.stringify(userscripts)};
-    const includes = ${JSON.stringify(allIncludes)};
-    const ranCheckKey = ${Math.random()} + "-" + ${Date.now()} + "-userscripts-ran";
-    const len = userscripts.length;
+    const processedUserscripts =
+        optionMinify ?
+            await Promise.all(userscripts.map(userscript => minifyJavascript(userscript)))
+            :
+            userscripts;
 
-    function run() {
-        if (window[ranCheckKey]) {
-            if (!confirm("Are you sure you want to run the userscripts again?")) {
-                return;
-            }
-        }
+    const bookmarketBody = await createBookmarketBody(
+        processedUserscripts,
+        allIncludes,
+        optionUseSmallWrapper
+    );
 
-        window[ranCheckKey] = true;
+    return "javascript:eval(" + JSON.stringify(
+        optionMinify ?
+            await minifyJavascript(bookmarketBody)
+            :
+            bookmarketBody
+    ) + ")";
+}
 
-        window.isRunningAsBookmarkletUserscript = true;
-        
-        for (let i = 0; i < len; i++) {
-            const userscript = userscripts[i];
-            const includeData = includes[i];
+let bookmarkWrapper = fetchText("bookmarketWrapper.js");
+let bookmarkWrapperLite = fetchText("bookmarketWrapperLite.js");
 
-            if (!doesMatch(includeData, location.href)) { continue; }
-
-            try {
-                window.eval(userscript);
-            } catch (err) { console.error(err); }
-        }
-
-        delete window.isRunningAsBookmarkletUserscript;
-    }
-
-    function doesMatch(includesData, url) {
-        const [includes, excludes] = includesData;
-
-        for (const exclude of excludes) {
-            if (patternMatchesURL(exclude, url)) {
-                return false;
-            }
-        }
-
-        for (const include of includes) {
-            if (patternMatchesURL(include, url)) {
-                return true;
-            }
-        }
-
-        return includes.length === 0;
-    }
-
-    function patternMatchesURL(pattern, url) {
-        let regex;
-
-        if (pattern.startsWith("/") && pattern.endsWith("/")) {
-            regex = new RegExp(pattern.slice(1, -1));
-        } else {
-            regex = patternStrToRegex(pattern);
-        }
-
-        return regex.test(url);
-    }
-
-    const specialCharacters = [
-        "\\\\", ".", "+", "?", "^", "$", "(", ")", "[", "]", "{", "}", "|"
-    ];
-    const specialCharactersRegex = specialCharacters.map(c => new RegExp("\\\\" + c, "g"));
-
-    function patternStrToRegex(pattern) {
-        let regexStr = pattern;
-        for (let i = 0; i < specialCharacters.length; i++) {
-            specialChar = specialCharacters[i];
-            specialCharRegexp = specialCharactersRegex[i];
-            regexStr = regexStr.replace(specialCharRegexp, "\\\\" + specialChar);
-        }
-        return new RegExp("^" + regexStr.replace(/\\*/g, ".*") + "$", "i");
-    }
-
-    run();
-}());`;
+/**
+ * @param {string[]} userscripts 
+ * @param {any[][]} allIncludes
+ * @param {boolean} useSmallWrapper
+ */
+async function createBookmarketBody(userscripts, allIncludes, useSmallWrapper) {
+    return (await (useSmallWrapper ? bookmarkWrapperLite : bookmarkWrapper))
+        .replace("[/* userscripts */]", JSON.stringify(userscripts))
+        .replace("[/* allIncludes */]", JSON.stringify(allIncludes))
+        .replace("[/* random */]", Math.random().toString())
+        .replace("[/* time */]", Date.now().toString());
 }
 
 /**
@@ -269,8 +255,8 @@ class UserscriptTextarea {
         userscriptsInputDiv.appendChild(this.container);
     }
 
-    _inputHandler() {
-        outputAnchor.href = processInput(UserscriptTextarea.getAllInputs());
+    async _inputHandler() {
+        updateAnchorHref();
         updateName();
 
         if (this.textarea.value !== "") {

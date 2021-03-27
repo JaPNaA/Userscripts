@@ -6,6 +6,14 @@ textarea {
     margin-bottom: 0.5em;
 }
 
+h4 {
+    margin-bottom: 0.2em;
+}
+
+label {
+    display: block;
+}
+
 .userscriptTextareaContainer {
     position: relative;
 }
@@ -38,7 +46,6 @@ textarea {
 .userscriptTextareaImportDialogue > button:focus {
     background-color: rgb(226, 226, 226);
 }
-
 
 .hintDialogueContainer {
     position: relative;
