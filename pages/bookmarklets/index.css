@@ -7,6 +7,7 @@ textarea {
 }
 
 h4 {
+    font-size: 1.1em;
     margin-bottom: 0.2em;
 }
 
@@ -65,4 +66,17 @@ label {
     border: 1px solid black;
     box-shadow: 1px 2px 4px #0000001f;
     background-color: #ffffff;
+}
+
+#output {
+    font-weight: bold;
+}
+
+#output.loading {
+    opacity: 0.4;
+}
+
+#output.loading::after {
+    content: " is loading...";
+    font-style: italic;
 }

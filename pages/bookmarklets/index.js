@@ -92,7 +92,9 @@ function updateName() {
 }
 
 async function updateAnchorHref() {
+    outputAnchor.classList.add("loading");
     outputAnchor.href = await processInput(UserscriptTextarea.getAllInputs());
+    outputAnchor.classList.remove("loading");
 }
 
 /** @param {string} code */
