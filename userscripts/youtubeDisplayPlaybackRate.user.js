@@ -6,6 +6,7 @@
 // @author       JaPNaA
 // @match        https://*.youtube.com/*
 // @match        https://*.youtube-nocookie.com/*
+// @match        https://youtube.googleapis.com/embed/*
 // @grant        none
 // ==/UserScript==
 
