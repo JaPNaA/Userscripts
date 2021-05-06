@@ -173,6 +173,12 @@
             this.isActive = true;
 
             /**
+             * Is the zoom/position/rotate in default state?
+             * @type {boolean}
+             */
+            this.isDefaultState = true;
+
+            /**
              * Is the user holding down the up arrow key?
              * @type {boolean}
              */
@@ -356,12 +362,14 @@
             this._onKeyDown = this._onKeyDown.bind(this);
             this._onKeyUp = this._onKeyUp.bind(this);
             this._onBlur = this._onBlur.bind(this);
+            this._onResize = this._onResize.bind(this);
 
             addEventListener("mouseup", this._onMouseUp);
             addEventListener("mousemove", this._onMouseMove);
             addEventListener("keydown", this._onKeyDown);
             addEventListener("keyup", this._onKeyUp);
             addEventListener("blur", this._onBlur);
+            addEventListener("resize", this._onResize);
         }
 
         /**
@@ -373,6 +381,11 @@
             removeEventListener("keydown", this._onKeyDown);
             removeEventListener("keyup", this._onKeyUp);
             removeEventListener("blur", this._onBlur);
+        }
+
+        _onTransformUpdate() {
+            this.isDefaultState = false;
+            this._wakeFromSleep();
         }
 
         _wakeFromSleep() {
@@ -673,6 +686,15 @@
             this.isRotating = false;
         }
 
+        _onResize() {
+            this.boundWidth = innerWidth;
+            this.boundHeight = innerHeight;
+
+            if (this.isDefaultState) {
+                this._resetImageTransform();
+            }
+        }
+
         // --- Transformations ---
 
         /**
@@ -686,7 +708,7 @@
             this.ty += y;
             this.y += y;
 
-            this._wakeFromSleep();
+            this._onTransformUpdate();
         }
 
         /**
@@ -697,7 +719,7 @@
             this.rotation += angle;
             this.rotation %= Math.PI * 2;
 
-            this._wakeFromSleep();
+            this._onTransformUpdate();
         }
 
         /**
@@ -711,7 +733,7 @@
             this.tx -= (x - this.tx) * (factor - 1);
             this.ty -= (y - this.ty) * (factor - 1);
 
-            this._wakeFromSleep();
+            this._onTransformUpdate();
         }
 
         /**
@@ -733,7 +755,8 @@
             this.vy = 0;
             this.rotation = 0;
 
-            this._wakeFromSleep();
+            this._onTransformUpdate();
+            this.isDefaultState = true;
         }
 
         // --- Animation Control ---
