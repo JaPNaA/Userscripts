@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better image viewer
 // @namespace    https://japnaa.github.io/Userscripts/
-// @version      0.5
+// @version      0.6
 // @description  A better image viewer
 // @author       JaPNaA
 // @include      *://*/*
