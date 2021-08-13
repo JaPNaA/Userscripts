@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Display Playback Rate
 // @namespace    https://japnaa.github.io/Userscripts/
-// @version      0.1
+// @version      0.2
 // @description  Displays the playback rate on YouTube videos
 // @author       JaPNaA
 // @match        https://*.youtube.com/*
@@ -67,9 +67,7 @@
     }
 
     const observer = new MutationObserver(function (mutations) {
-        for (let mutation of mutations) {
-            updateElmOnTimeout();
-        }
+        updateElmOnTimeout();
     });
 
     function observe() {
@@ -82,10 +80,6 @@
 
     function disconnect() {
         observer.disconnect();
-    }
-
-    function flush() {
-        observer.takeRecords();
     }
 
     updateElm();

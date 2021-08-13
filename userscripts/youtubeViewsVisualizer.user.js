@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Views Visualizer
 // @namespace    https://japnaa.github.io/Userscripts/
-// @version      1
+// @version      1.1
 // @description  Highlights videos with more views
 // @author       JaPNaA
 // @match        *://www.youtube.com/*
@@ -75,9 +75,7 @@
     }
 
     const observer = new MutationObserver(function (mutations) {
-        for (let mutation of mutations) {
-            updateElmOnTimeout();
-        }
+        updateElmOnTimeout();
     });
 
     function observe() {
@@ -90,10 +88,6 @@
 
     function disconnect() {
         observer.disconnect();
-    }
-
-    function flush() {
-        observer.takeRecords();
     }
 
     updateElm();

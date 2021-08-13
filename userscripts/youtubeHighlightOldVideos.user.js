@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Highlight Old Videos
 // @namespace    https://japnaa.github.io/Userscripts/
-// @version      1
+// @version      1.1
 // @description  Highlights videos that are 8+ years old
 // @author       JaPNaA
 // @match        *://www.youtube.com/*
@@ -63,10 +63,8 @@
         }, 100);
     }
 
-    const observer = new MutationObserver(function (mutations) {
-        for (let mutation of mutations) {
-            updateElmOnTimeout();
-        }
+    const observer = new MutationObserver(function () {
+        updateElmOnTimeout();
     });
 
     function observe() {
@@ -79,10 +77,6 @@
 
     function disconnect() {
         observer.disconnect();
-    }
-
-    function flush() {
-        observer.takeRecords();
     }
 
     updateElm();

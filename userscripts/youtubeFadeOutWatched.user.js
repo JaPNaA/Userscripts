@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Fade Out Watched
 // @namespace    https://japnaa.github.io/Userscripts/
-// @version      0.1
+// @version      0.2
 // @description  Fades out watched videos on YouTube
 // @author       JaPNaA
 // @match        https://www.youtube.com/*
@@ -70,10 +70,8 @@
         }, 100);
     }
 
-    const observer = new MutationObserver(function (mutations) {
-        for (let mutation of mutations) {
-            updateElmOnTimeout();
-        }
+    const observer = new MutationObserver(function () {
+        updateElmOnTimeout();
     });
 
     function observe() {
@@ -86,10 +84,6 @@
 
     function disconnect() {
         observer.disconnect();
-    }
-
-    function flush() {
-        observer.takeRecords();
     }
 
     updateElm();
