@@ -79,6 +79,7 @@
         function mouseUpHandler(e) {
             if (e.button === 2) {
                 div.style.backdropFilter = "blur(8px)";
+                div.style.cursor = "";
                 e.preventDefault();
                 return;
             }
@@ -93,6 +94,7 @@
         function mouseDownHandler(e) {
             if (e.button === 2) {
                 div.style.backdropFilter = "";
+                div.style.cursor = "none";
                 e.preventDefault();
                 return;
             }
