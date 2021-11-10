@@ -152,7 +152,7 @@ async function processInput(userscripts) {
         optionUseSmallWrapper
     );
 
-    return "javascript:eval(" + JSON.stringify(
+    return "javascript:void eval(" + JSON.stringify(
         optionMinify ?
             await minifyJavascript(bookmarketBody)
             :
