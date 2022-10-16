@@ -1,6 +1,7 @@
 textarea {
     display: block;
     width: 100%;
+    box-sizing: border-box;
     height: 256px;
     resize: none;
     margin-bottom: 0.5em;
@@ -72,11 +73,16 @@ label {
     font-weight: bold;
 }
 
-#output.loading {
+#output.loading, #output.error {
     opacity: 0.4;
 }
 
 #output.loading::after {
     content: " is loading...";
+    font-style: italic;
+}
+
+#output.error::after {
+    content: " contains errors.";
     font-style: italic;
 }

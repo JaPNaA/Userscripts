@@ -4,6 +4,8 @@ import userscriptMetadata from "../../commmon/userscriptMetadata.js";
 const userscriptsInputDiv = document.getElementById("userscriptsInput");
 /** @type {HTMLButtonElement} */ // @ts-ignore
 const addUserscriptButton = document.getElementById("add");
+/** @type {HTMLButtonElement} */ // @ts-ignore
+const copyBookmarkletButton = document.getElementById("copy");
 /** @type {HTMLInputElement} */ // @ts-ignore
 const nameInput = document.getElementById("name");
 /** @type {HTMLAnchorElement} */ // @ts-ignore
@@ -23,6 +25,15 @@ function main() {
         new UserscriptTextarea().appendToUserscriptInputDiv();
     });
 
+    copyBookmarkletButton.addEventListener("click", function () {
+        if (!navigator.clipboard) {
+            prompt("Copy the below:", outputAnchor.href);
+            return;
+        }
+        navigator.clipboard.writeText(outputAnchor.href)
+            .catch(err => alert("Failed to copy:\n" + err));
+    });
+
     nameInput.addEventListener("change", function () {
         inputtedName = nameInput.value;
         updateName();
@@ -38,7 +49,7 @@ function main() {
         updateAnchorHref();
     });
 
-    /** @type {HintDialogue} */
+    /** @type {HintDialogue | undefined} */
     let existingHintDialogue;
 
     outputAnchor.addEventListener("click", function (e) {
@@ -51,6 +62,12 @@ function main() {
     });
 
     outputAnchor.addEventListener("mousedown", function () {
+        if (!existingHintDialogue) { return; }
+        existingHintDialogue.remove();
+        existingHintDialogue = undefined;
+    });
+
+    outputAnchor.addEventListener("blur", function() {
         if (!existingHintDialogue) { return; }
         existingHintDialogue.remove();
         existingHintDialogue = undefined;
@@ -93,7 +110,14 @@ function updateName() {
 
 async function updateAnchorHref() {
     outputAnchor.classList.add("loading");
-    outputAnchor.href = await processInput(UserscriptTextarea.getAllInputs());
+    copyBookmarkletButton.disabled = true;
+    try {
+        outputAnchor.href = await processInput(UserscriptTextarea.getAllInputs());
+        outputAnchor.classList.remove("error");
+        copyBookmarkletButton.disabled = false;
+    } catch (err) {
+        outputAnchor.classList.add("error");
+    }
     outputAnchor.classList.remove("loading");
 }
 
@@ -213,7 +237,7 @@ class UserscriptTextarea {
         this.importButton.innerText = "Import from...";
         this.importButtonContainer.appendChild(this.importButton);
 
-        /** @type {HintDialogue} */
+        /** @type {HintDialogue | undefined} */
         this.existingHintDialogue = undefined;
 
         this.importButton.addEventListener("click", () => {
@@ -340,6 +364,7 @@ class JaPNaAUserscriptsIFrame {
         this.container.appendChild(this.iframe);
 
         this.iframe.addEventListener("load", () => {
+            if (!this.iframe.contentWindow) { alert("Error -- cannot access iframe to import scripts."); return; }
             this.iframe.contentWindow.postMessage("userscriptSelect", location.origin);
         });
 
@@ -385,7 +410,9 @@ class HintDialogue {
     }
 
     remove() {
-        this.anchorElm.removeChild(this.container);
+        if (this.container.parentNode === this.anchorElm) {
+            this.anchorElm.removeChild(this.container);
+        }
     }
 }
 
