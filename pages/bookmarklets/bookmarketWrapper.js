@@ -61,9 +61,7 @@
         return regex.test(url);
     }
 
-    const specialCharacters = [
-        "\\", ".", "+", "?", "^", "$", "(", ")", "[", "]", "{", "}", "|"
-    ];
+    const specialCharacters = Array.from("\\.+?^$()[]{}|");
     const specialCharactersRegex = specialCharacters.map(c => new RegExp("\\" + c, "g"));
 
     function patternStrToRegex(pattern) {
