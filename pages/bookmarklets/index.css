@@ -16,6 +16,10 @@ label {
     display: block;
 }
 
+.hidden {
+    display: none;
+}
+
 .userscriptTextareaContainer {
     position: relative;
 }
@@ -85,4 +89,13 @@ label {
 #output.error::after {
     content: " contains errors.";
     font-style: italic;
+}
+
+#shareLink {
+    user-select: all;
+}
+
+#outSection.highlight {
+    background-color: #fff9bf;
+    outline: 16px solid #fff9bf;
 }

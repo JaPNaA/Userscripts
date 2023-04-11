@@ -14,6 +14,14 @@ const outputAnchor = document.getElementById("output");
 const optionMinifyCheckbox = document.getElementById("minify");
 /** @type {HTMLInputElement} */ // @ts-ignore
 const optionSmallWrapperCheckbox = document.getElementById("smallWrapper");
+/** @type {HTMLDivElement} */ // @ts-ignore
+const outputSectionDiv = document.getElementById("outSection");
+/** @type {HTMLDivElement} */ // @ts-ignore
+const shareSectionDiv = document.getElementById("share");
+/** @type {HTMLSpanElement} */ // @ts-ignore
+const shareImportedUrlSpan = document.getElementById("shareImportedUrl");
+/** @type {HTMLDivElement} */ // @ts-ignore
+const shareLinkDiv = document.getElementById("shareLink");
 
 let inputtedName = undefined;
 let placeholderName = "";
@@ -67,7 +75,7 @@ function main() {
         existingHintDialogue = undefined;
     });
 
-    outputAnchor.addEventListener("blur", function() {
+    outputAnchor.addEventListener("blur", function () {
         if (!existingHintDialogue) { return; }
         existingHintDialogue.remove();
         existingHintDialogue = undefined;
@@ -79,6 +87,12 @@ function main() {
     if (location.hash) {
         const autoloadSrc = location.hash.startsWith("#") ? location.hash.slice(1) : location.hash;
         userscriptTextreaImportFromURL(firstUserscriptTextarea, autoloadSrc);
+        setShareUrl(autoloadSrc);
+        outputSectionDiv.classList.add("highlight");
+        outputSectionDiv.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
     }
 }
 
@@ -89,6 +103,15 @@ function main() {
 function userscriptTextreaImportFromURL(userscriptTextrea, src) {
     userscriptTextrea.textarea.value = "Auto importing from `" + src + "`...";
     userscriptTextrea.attachToImportPromise(fetchText(src));
+}
+
+/**
+ * @param {string} url 
+ */
+function setShareUrl(url) {
+    shareSectionDiv.classList.remove("hidden");
+    shareImportedUrlSpan.innerText = url;
+    shareLinkDiv.innerText = location.origin + location.pathname + "#" + url;
 }
 
 /** @param {string} src */
@@ -326,16 +349,33 @@ class UserscriptTextareaImportDialogue {
     waitForImport() {
         return new Promise(res => {
             this.fromURLOption.addEventListener("click", () => {
-                const url = prompt("Enter URL");
+                /** @type {string} */ // @ts-ignore
+                let url = prompt("Enter URL");
                 if (!url) { return; }
-                res(fetchText(url));
+                const greasyforkRegex = /(https?:\/\/greasyfork\.org\/.+\/)scripts\/([^\n\/]+)(\/.+.user.js)?/i;
+                const greasyforkMatch = url.match(greasyforkRegex);
+                if (greasyforkMatch && !greasyforkMatch[3]) {
+                    const suggestedUrl = greasyforkMatch[1] + "scripts/" + greasyforkMatch[2] + "/code/code.user.js";
+                    if (confirm("Greasyfork URL doesn't look right. Use the following url instead?\n" + suggestedUrl)) {
+                        url = suggestedUrl;
+                    }
+                }
+                fetchText(url).then(text => {
+                    res(text);
+                    setShareUrl(url);
+                }).catch(err => {
+                    alert("Error: " + err + "\n\nNote that URL imports pretty much only works for Greasyfork and GitHub Gist scripts. Please try copy-pasting instead.");
+                });
             });
 
             this.fromJaPNaAOption.addEventListener("click", () => {
                 const frame = new JaPNaAUserscriptsIFrame();
                 res(
                     frame.waitForSelection()
-                        .then(url => fetchText(url))
+                        .then(url => {
+                            setShareUrl(url);
+                            return fetchText(url);
+                        })
                 );
             });
 
