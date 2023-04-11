@@ -2,7 +2,7 @@
 // @name         Always L
 // @namespace    https://japnaa.github.io/Userscripts/
 // @version      1.3
-// @description  Holds L for you
+// @description  Holds L for you in diep.io
 // @author       JaPNaA
 // @match        *://diep.io/*
 // @grant        none
