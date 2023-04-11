@@ -225,6 +225,7 @@ class UserscriptTextarea {
         this.container.classList.add("userscriptTextareaContainer");
 
         this.textarea = document.createElement("textarea");
+        this.textarea.placeholder = "Insert userscript or javascript here...";
         this.container.appendChild(this.textarea);
 
         this.textarea.addEventListener("input", () => this._inputHandler());
@@ -339,9 +340,9 @@ class UserscriptTextareaImportDialogue {
             });
 
             this.fromPaste.addEventListener("click", () => {
-                const readClipboardPromise = navigator.clipboard.readText();
+                const readClipboardPromise = new Promise(_ => navigator.clipboard.readText());
                 readClipboardPromise.catch(() => {
-                    alert("Failed to read from clipboard. Try using ctrl-v on the textarea instead.");
+                    alert("Failed to read from clipboard. Try pressing Ctrl-V while the textarea is selected instead.");
                 });
                 res(readClipboardPromise);
             });

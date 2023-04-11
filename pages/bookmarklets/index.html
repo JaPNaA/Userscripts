@@ -17,6 +17,8 @@
         <p> It's possible to use <a href="https://en.wikipedia.org/wiki/Bookmarklet" target="_blank">bookmarklets</a> to manually run userscripts without having to install additional extentions. </p>
         <p> This website allows you to generate these bookmarklets from userscripts. </p>
 
+        <h4> 1. Insert userscript below </h4>
+
         <div id="userscriptsInput">
             <noscript> You need JavaScript to do this! (Why are you interested in Userscript when JavaScript isn't even enabled?) </noscript>
         </div>
@@ -24,24 +26,24 @@
 
         <p>
             <label>
-                Name your bookmarklet:
+                <h4>2. Name your bookmarklet</h4>
                 <input id="name" placeholder="My bookmarklet">
             </label>
         </p>
 
         <p>
-        <h4> Extra Options </h4>
+        <h4> 3. Extra Options </h4>
         <label> <input type="checkbox" checked id="minify"> Minify </label>
         <label> <input type="checkbox" id="smallWrapper"> Use small wrapper (and lose website matching, double-run warnings, etc.)</label>
         </p>
 
         <p>
-        <h4>Add the link below to your bookmarks bar.</h4>
-        (Bookmarks bar usually opened with Ctrl-Shift-B)
+        <h4>4. Add the link below to your bookmarks bar.</h4>
+        (Ctrl-Shift-B usually opens the bookmarks bar)
         </p>
         <a id="output"> (You must insert a userscript above first) </a>
         <p>
-            You may also copy the bookmarklet instead: <br>
+            You may also copy the bookmarklet <code>javascript:</code> url instead: <br>
             <button id="copy" disabled> Copy Link </button>
         </p>
         <p style="margin-top: 4em;">
