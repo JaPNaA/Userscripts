@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Reddit Stay on old
 // @namespace    https://japnaa.github.io/Userscripts/
-// @version      0.1
-// @description  try to take over the world!
+// @version      0.2
+// @description  Converts www.reddit.com links to old.reddit.com on click
 // @author       JaPNaA
 // @match        https://old.reddit.com/*
 // @grant        none
@@ -11,7 +11,7 @@
 (function () {
     const regex = /^https?:\/\/www\.reddit\.com\/(.*)/;
 
-    addEventListener("click", function (e) {
+    addEventListener("mousedown", function (e) {
         const ahref = getAHrefParent(e.target);
         if (!ahref) { return; }
         const match = ahref.href.match(regex);
